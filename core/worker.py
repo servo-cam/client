@@ -26,8 +26,8 @@ from status import Status  # <---- status callback
 
 
 class Worker:
-    AUTHOR = "Marcin Szczygliński"
-    EMAIL = "szczyglis@protonmail.com"
+    AUTHOR = "servocam.org"
+    EMAIL = "info@servocam.org"
     TIME_WAIT = 2.0
 
     # devices
@@ -124,7 +124,7 @@ class Worker:
             self.hostname = socket.gethostname()
 
         self.load_version()
-        self.log("Tracker2 client starting...")
+        self.log("Servo Cam client starting...")
         self.log("Version: " + str(self.version) + " Build: " + str(self.build))
         self.log("(c) 2023 " + str(self.AUTHOR) + " <" + str(self.EMAIL) + ">")
         self.log("------------------------")
