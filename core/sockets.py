@@ -43,9 +43,7 @@ class Sockets:
         self.self_context = None  # zmq.Context()
 
     def thread_connect(self):
-        """
-        Thread for handling connection initialize TCP socket
-        """
+        """Thread for handling connection initialize TCP socket"""
         ip = ''
         if self.worker.client_ip is not None and self.worker.client_ip != '*':
             ip = self.worker.client_ip
@@ -118,9 +116,11 @@ class Sockets:
     def thread_data(self):
         """
         Thread for handling data receive (PULL) and data send (PUSH) sockets
+
+        Zmq data push (sender) socket - server app must connect to this socket via it's PULL socket
+        Push socket is created here becose not thread safe
         """
-        # zmq data push (sender) socket - server app must connect to this socket via it's PULL socket
-        # push socket is created here becose not thread safe
+
         self.push_context = zmq.Context()
         self.push_socket = self.push_context.socket(zmq.PUSH)
 
@@ -166,6 +166,7 @@ class Sockets:
     def decode(self, data):
         """
         Decode data received via socket
+
         :param data: received raw data to decode
         :return: decoded data (json)
         """
@@ -179,6 +180,7 @@ class Sockets:
     def encode(self, data):
         """
         Encode data to send via socket
+
         :param data: data to encode
         :return: encoded data (bytes)
         """
@@ -192,6 +194,7 @@ class Sockets:
     def send_raw(self, msg):
         """
         Send raw data via push socket
+
         :param msg: data to send
         """
         if self.worker.server_ip is None or self.push_socket is None or self.push_context is None or self.push_context.closed:
@@ -206,6 +209,7 @@ class Sockets:
     def send(self, msg):
         """
         Send data via push socket
+
         :param msg: data to send
         """
         if self.worker.server_ip is None or self.push_socket is None or self.push_context is None or self.push_context.closed:
@@ -220,6 +224,7 @@ class Sockets:
     def send_self(self, msg):
         """
         Send data to self via push socket
+
         :param msg: data to send
         """
         if self.self_socket is None or self.self_context is None or self.self_context.closed:
@@ -232,9 +237,7 @@ class Sockets:
             time.sleep(1)
 
     def restart_pull_socket(self):
-        """
-        Restart pull socket
-        """
+        """Restart pull socket"""
         try:
             if self.pull_socket is not None:
                 self.pull_socket.close()
@@ -258,9 +261,7 @@ class Sockets:
             self.log_err(e, 'Pull socket restarting error')
 
     def restart_push_socket(self):
-        """
-        Restart push socket
-        """
+        """Restart push socket"""
         try:
             if self.push_socket is not None:
                 self.push_socket.close()
@@ -283,16 +284,12 @@ class Sockets:
             self.log_err(e, 'Push socket restarting error')
 
     def restart(self):
-        """
-        Restart both sockets
-        """
+        """Restart both sockets"""
         self.restart_pull_socket()
         self.restart_push_socket()
 
     def stop(self):
-        """
-        Stop both sockets
-        """
+        """Stop both sockets"""
         self.log("Stopping all sockets...", True)
         self.exiting = True
         try:
@@ -312,9 +309,8 @@ class Sockets:
             self.log_err(e, 'Socket stopping error')
 
     def start(self):
-        """
-        Start sockets and threads
-        """
+        """Start sockets and threads"""
+
         # tcp connect socket thread (receive)
         conn = Thread(target=self.thread_connect, args=())
         conn.daemon = True
@@ -338,6 +334,7 @@ class Sockets:
     def log(self, msg, status=False):
         """
         Log message into console
+
         :param msg: string message
         :param status: if True then always show message
         """
@@ -346,6 +343,7 @@ class Sockets:
     def log_err(self, err, msg=None):
         """
         Log error message into console
+
         :param err: exception
         :param msg: additional message
         """

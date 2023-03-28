@@ -66,9 +66,7 @@ class Worker:
     PORT_WEB = 8888
 
     def __init__(self):
-        """
-        Main worker class
-        """
+        """Main worker class"""
         self.args = None
         self.version = "0.0.0"
         self.build = "0"

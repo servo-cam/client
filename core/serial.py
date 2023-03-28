@@ -91,9 +91,7 @@ class Serial:
                 self.disconnected_out = True
 
     def init_input(self):
-        """
-        Initialize input serial port (used for receiving external commands)
-        """
+        """Initialize input serial port (used for receiving external commands)"""
         if self.serial_in is None and self.port_in is not None:
             try:
                 self.serial_in = serial.Serial(self.port_in, self.BAUD_RATE)
@@ -178,9 +176,7 @@ class Serial:
             self.last_status_check = datetime.now()
 
     def update(self):
-        """
-        Called on update event (every frame) and sending status check command
-        """
+        """Called on update event (every frame) and sending status check command"""
         if self.port_out is None or self.serial_out is None or not self.serial_out.is_open:
             return
 
