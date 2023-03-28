@@ -1,0 +1,58 @@
+JOŁ!
+
+Nie klikaj w Start, bo wszystko jest już uruchomione w tle jak to czytasz - startuje automatycznie przy starcie.
+Skróty tutaj są tylko do ręcznej kontroli na wypadek jakiś problemów:
+
+Start - startuje terminatora
+Start-web - startuje wersję webową (więcej w dokumentacji)
+Restart - restartuje terminatora
+Stop - zatrzymuje
+Status - pokazuje status, czy proces w tle działa
+
+config.ini - symlink do konfigu
+status.py - symlink do skryptu w pythonie, gdzie można sobie oprogramować własne pobieranie statusu z urządzenia (np. licznik amunicji ;) )
+
+=======================
+
+Software (klient) siedzi w /home/pi/terminator
+
+Software do zdalnej kontroli/zarządzania tym (serwer) musisz uruchomić na komputerze.
+
+=======================
+
+Nad całością czuwa tutaj appka "supervisor" (to jest appka zarządzająca procesami)
+https://supervisord.org
+Jej konfig jest w: /etc/supervisor/conf.d/
+Trzyma w systemie uruchomiony proces: /home/pi/terminator/bin/start
+który to proces z kolei uruchamia: /home/pi/terminator/client.py
+Więc zawsze możesz sprawdzić w procesach (ps) czy wszystko działa - czy proces jest na liście.
+
+
+Wszystko startuje automatycznie w tle przy starcie systemu, nic nie trzeba ręcznie uruchamiać.
+Jeśli w trakcie coś się przywiesi, to supervisor z automatu to zrestartuje - pilnuje całości w tle.
+
+=======================
+
+JEDYNE CO MUSISZ ZROBIĆ NA STARCIE TUTAJ:
+
+- ustaw tutaj hasło do WiFi (na górze po prawej)
+- restart, odpięcie monitora, bo do niczego więcej nie będzie tu już potrzebny
+
+Potem znajdź IP jakie przypisze Ci router do Raspberry i połącz się nim z poziomu appki.
+IP sobie dopisz do pliku "hosts.txt" w katalogu z appką (serwerową, na komputerze), podmieniając domyślne.
+Nie będziesz musiał ponownie wpisywać w appce przy każdym połączeniu.
+Znajdziesz wszystko w dokumentacji co i jak.
+
+=======================
+
+Hasła do root-a tutaj:
+
+user: pi
+pass: dupa1234
+
+Uruchomione jest SSH, więc możesz się tutaj dostać zdalnie przez SFTP, np. z poziomu Filezilli.
+System tutaj to Rasbian, najnowszy, zainstalowany na świeżo na karcie SD jaka tutaj siedzi.
+
+Miłej zabawy! Nie zastrzel się ;)
+
+// szczyglis, 2023.03.12

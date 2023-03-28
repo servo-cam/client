@@ -1,0 +1,4 @@
+#!/bin/bash
+sudo supervisorctl stop all
+sudo service supervisor stop
+pkill -f client.py

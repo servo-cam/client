@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /home/pi/terminator
+source "/home/pi/terminator/venv.sh"
+python ./client.py --web=1 --hidden=1 > /dev/null
