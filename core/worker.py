@@ -240,7 +240,6 @@ class Worker:
 
     def start_device(self):
         """Start device worker"""
-        # start device worker
         if self.device == self.DEVICE_ARDUINO:
             self.arduino.start()
         elif self.device == self.DEVICE_RASPBERRY:
@@ -288,7 +287,6 @@ class Worker:
             self.version = "0.0.0"
             self.build = "0"
 
-    # log message
     def log(self, msg, status=True):
         """
         Log message
